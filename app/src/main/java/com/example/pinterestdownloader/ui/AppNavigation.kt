@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -24,10 +25,10 @@ fun AppNavigation(
         if (initialUrl != null) {
             downloadViewModel.addDownloadLink(initialUrl)
             onUrlHandled()
-            navController.navigate(Screen.Downloader.route) {
-                popUpTo(navController.graph.startDestinationId)
-                launchSingleTop = true
-            }
+//            navController.navigate(Screen.Downloader.route) {
+//                popUpTo(navController.graph.startDestinationId)
+//                launchSingleTop = true
+//            }
         }
     }
 
@@ -50,8 +51,9 @@ fun AppNavigation(
                 settingsViewModel = settingsViewModel,
                 onNavigateToInput = {
                     navController.navigate(Screen.Input.route) {
-                        popUpTo(Screen.Input.route) { inclusive = true }
+                        popUpTo(navController.graph.findStartDestination().id) { inclusive = true }
                     }
+
                 }
             )
         }

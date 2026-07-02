@@ -100,7 +100,7 @@ class DownloadViewModel(application: Application) : AndroidViewModel(application
                     downloadUrl = extractMatch(step1Match, imageRegex2)
                 }
             }
-
+            println("Download URL : $downloadUrl")
             if (downloadUrl == null) {
                 updateItem(item.copy(status = "Failed", fileName = "No link found", error = "Could not find media link"))
                 return
@@ -131,7 +131,7 @@ class DownloadViewModel(application: Application) : AndroidViewModel(application
         return try {
             val regex = Regex(regexStr)
             val match = regex.find(content)
-            match?.groups?.get(1)?.value ?: match?.value
+            match?.groups?.get(0)?.value ?: match?.value
         } catch (e: Exception) {
             null
         }
